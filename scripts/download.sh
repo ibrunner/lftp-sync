@@ -2,7 +2,6 @@
 
 # Function to log messages
 log_message() {
-    echo "1:09"
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
@@ -32,7 +31,7 @@ lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
         --only-newer \
         --Remove-source-files \
         --Remove-source-dirs \
-        "${REMOTE_DIR}/" .
+        "${REMOTE_DIR}/" /downloads
     
     quit
 EOF
