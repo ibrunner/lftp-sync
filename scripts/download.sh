@@ -45,11 +45,34 @@ lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
         rm -f "${remote_file}"
     done < /tmp/downloaded_files.txt
     
-    # Clean up empty directories
+    # Clean up empty directories in the local directory
     for i in {1..5}; do
-        find . -type d -empty -delete
+        find "${LOCAL_DIR}" -type d -empty -delete
     done
     
+    # Keep checking for new files until none are found
+    while true; do
+        log_message "Performing additional check for new files..."
+        
+        # Create a temporary file to track if new files were downloaded
+        rm -f /tmp/new_files_found
+        
+        mirror \
+            --verbose \
+            --parallel=${PARALLEL_JOBS} \
+            --use-pget-n=${CHUNKS_PER_FILE} \
+            --only-newer \
+            . "${LOCAL_DIR}" || touch /tmp/new_files_found
+            
+        # If no new files were downloaded, break the loop
+        if [ ! -f /tmp/new_files_found ]; then
+            log_message "No new files found, finishing up..."
+            break
+        fi
+        
+        log_message "New files were found, continuing checks..."
+    done
+        
     quit
 EOF
 
@@ -61,4 +84,4 @@ fi
 
 # Update lock file timestamp
 touch "$LOCK_FILE"
-log_message "Download process completed" 
+log_message "Download process completed after ensuring all files were downloaded" 
