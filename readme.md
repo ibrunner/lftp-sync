@@ -1,3 +1,12 @@
+## Usage
+
+- Pull image from docker hub: `ibrunner/lftp-sync:latest`
+- Click "advanced settings"
+- Environments tab:
+  - Get address,user and password from [Feral Hosting](https://www.feralhosting.com/slots/pallas/ibrunner/software)
+- Storage tab:
+  - "Bind mount host path" to `/media/downloads` -> `/downloads`
+
 ## Configuration
 
 ### Environment Variables
