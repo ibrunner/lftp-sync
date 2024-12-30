@@ -18,9 +18,17 @@ touch "$LOCK_FILE"
 # Main download logic
 log_message "Starting download process..."
 
+# Validate remote directory exists
 lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
+    # Test if directory exists and is accessible
+    cd "${REMOTE_DIR}" 2>/tmp/cd_error || {
+        cat /tmp/cd_error
+        log_message "Error: Cannot access remote directory '${REMOTE_DIR}'. Please check if the path exists and is accessible."
+        exit 1
+    }
+    log_message "Successfully connected to remote directory: ${REMOTE_DIR}"
+
     # First, mirror the files
-    cd "${REMOTE_DIR}"
     mirror \
         --verbose \
         --parallel=${PARALLEL_JOBS} \
@@ -44,6 +52,12 @@ lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
     
     quit
 EOF
+
+# Check if lftp exited with error
+if [ $? -ne 0 ]; then
+    log_message "Error: LFTP command failed. Check the logs above for details."
+    exit 1
+fi
 
 # Update lock file timestamp
 touch "$LOCK_FILE"
