@@ -2,6 +2,7 @@
 
 # Function to log messages
 log_message() {
+    echo "1:03"
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
@@ -18,17 +19,10 @@ touch "$LOCK_FILE"
 # Main download logic
 log_message "Starting download process..."
 
-# Create list of existing files before sync
-# find "${LOCAL_DIR}" -type f > /tmp/files_before.txt
-
 # Start LFTP session with built-in deletion
 lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
-    # Change to remote directory
-    cd "${REMOTE_DIR}"
-    
-    # Set LFTP options
-    set pget:min-size ${PGET_MIN_SIZE}
-    set pget:min-chunk-size ${PGET_MIN_CHUNK_SIZE}
+    # Log current directory and files
+    !echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting mirror from ${REMOTE_DIR}/"
     
     # Mirror the files and remove from remote after successful download
     mirror \
@@ -37,7 +31,8 @@ lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
         --use-pget-n=${CHUNKS_PER_FILE} \
         --only-newer \
         --Remove-source-files \
-        . "${LOCAL_DIR}"
+        --Remove-source-dirs \
+        "${REMOTE_DIR}/" .
     
     quit
 EOF
@@ -47,12 +42,6 @@ if [ $? -ne 0 ]; then
     log_message "Error: LFTP mirror command failed"
     exit 1
 fi
-
-# Clean up empty directories
-log_message "Cleaning up empty directories..."
-for i in {1..5}; do
-    find "${LOCAL_DIR}" -type d -empty -delete
-done
 
 # Update lock file timestamp
 touch "$LOCK_FILE"

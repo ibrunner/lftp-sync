@@ -29,8 +29,8 @@ ENV REMOTE_DIR="private/transmission/data"
 ENV LOCAL_DIR="/downloads"
 ENV PARALLEL_JOBS="3"
 ENV CHUNKS_PER_FILE="15"
-ENV PGET_MIN_SIZE="100M"
 ENV PGET_MIN_CHUNK_SIZE="10M"
+ENV SLEEP_TIME="90"
 
 # Set the entrypoint
 ENTRYPOINT ["/app/run.sh"] 
