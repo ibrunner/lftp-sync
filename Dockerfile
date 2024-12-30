@@ -25,7 +25,7 @@ RUN chmod +x /app/download.sh /app/run.sh
 ENV FTP_HOST=""
 ENV FTP_USER=""
 ENV FTP_PASS=""
-ENV REMOTE_DIR="private/transmission/downloads"
+ENV REMOTE_DIR="private/transmission/data"
 ENV LOCAL_DIR="/downloads"
 ENV PARALLEL_JOBS="3"
 ENV CHUNKS_PER_FILE="15"

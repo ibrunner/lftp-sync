@@ -2,15 +2,15 @@
 
 ### Environment Variables
 
-| Variable          | Description                                     | Default                          |
-| ----------------- | ----------------------------------------------- | -------------------------------- |
-| `FTP_HOST`        | FTP server address                              | (required)                       |
-| `FTP_USER`        | FTP username                                    | (required)                       |
-| `FTP_PASS`        | FTP password                                    | (required)                       |
-| `REMOTE_DIR`      | Remote directory to sync from                   | `private/transmission/downloads` |
-| `LOCAL_DIR`       | Local directory to sync to                      | `/downloads`                     |
-| `PARALLEL_JOBS`   | Number of parallel transfer jobs                | `3`                              |
-| `CHUNKS_PER_FILE` | Number of chunks per file for parallel download | `15`                             |
+| Variable          | Description                                     | Default                     |
+| ----------------- | ----------------------------------------------- | --------------------------- |
+| `FTP_HOST`        | FTP server address                              | (required)                  |
+| `FTP_USER`        | FTP username                                    | (required)                  |
+| `FTP_PASS`        | FTP password                                    | (required)                  |
+| `REMOTE_DIR`      | Remote directory to sync from                   | `private/transmission/data` |
+| `LOCAL_DIR`       | Local directory to sync to                      | `/downloads`                |
+| `PARALLEL_JOBS`   | Number of parallel transfer jobs                | `3`                         |
+| `CHUNKS_PER_FILE` | Number of chunks per file for parallel download | `15`                        |
 
 ### Volume Mounts
 

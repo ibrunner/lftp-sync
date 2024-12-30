@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     environment:
-      - REMOTE_DIR=private/transmission/downloads
+      - REMOTE_DIR=private/transmission/data
       - LOCAL_DIR=/downloads
       - PARALLEL_JOBS=3
       - CHUNKS_PER_FILE=15
