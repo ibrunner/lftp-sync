@@ -9,7 +9,6 @@ services:
       - .env
     environment:
       - REMOTE_DIR=private/transmission/data
-      - LOCAL_DIR=/downloads
       - PARALLEL_JOBS=3
       - CHUNKS_PER_FILE=15
     user: "${UID}:${GID}"

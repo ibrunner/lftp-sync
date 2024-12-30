@@ -2,7 +2,7 @@
 
 # Function to log messages
 log_message() {
-    echo "1:03"
+    echo "1:09"
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
