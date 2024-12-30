@@ -28,6 +28,10 @@ lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
     }
     log_message "Successfully connected to remote directory: ${REMOTE_DIR}"
 
+    # Set LFTP options with size-based chunking
+    set pget-min-size ${PGET_MIN_SIZE}
+    set pget:min-chunk-size ${PGET_MIN_CHUNK_SIZE}
+    
     # First, mirror the files
     mirror \
         --verbose \
