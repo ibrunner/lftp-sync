@@ -20,17 +20,9 @@ log_message "Starting download process..."
 
 # Validate remote directory exists
 lftp -u "${FTP_USER},${FTP_PASS}" "${FTP_HOST}" << EOF
-    # Create temp file for error logging
-    !touch /tmp/cd_error
-    
     # Test if directory exists and is accessible
-    cd "${REMOTE_DIR}" 2>/tmp/cd_error || {
-        !cat /tmp/cd_error >&2
-        !echo "[$(date '+%Y-%m-%d %H:%M:%S')] Error: Cannot access remote directory '${REMOTE_DIR}'. Please check if the path exists and is accessible." >&2
-        exit 1
-    }
-    !echo "[$(date '+%Y-%m-%d %H:%M:%S')] Successfully connected to remote directory: ${REMOTE_DIR}"
-
+    cd "${REMOTE_DIR}"
+    
     # Set LFTP options with size-based chunking
     set pget-min-size ${PGET_MIN_SIZE}
     set pget:min-chunk-size ${PGET_MIN_CHUNK_SIZE}
