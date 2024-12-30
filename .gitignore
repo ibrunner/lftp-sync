@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Docker
+.docker/
+
+# Logs
+*.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local development
+/data
+/tmp 

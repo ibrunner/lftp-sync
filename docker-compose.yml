@@ -1,0 +1,16 @@
+services:
+  lftp-sync:
+    image: ibrunner/lftp-sync:latest
+    platform: linux/amd64 
+    container_name: lftp-sync
+    volumes:
+      - /share/media/downloads:/downloads
+    env_file:
+      - .env
+    environment:
+      - REMOTE_DIR=/private/transmission/downloads
+      - LOCAL_DIR=/downloads
+      - PARALLEL_JOBS=3
+      - CHUNKS_PER_FILE=15
+    user: "${UID}:${GID}"
+    restart: unless-stopped
